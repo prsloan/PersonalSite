@@ -15,9 +15,9 @@
     },
 
     {
-      name : "Pentagonal Gem",
+      name : 'Pentagonal Gem',
       price : 5.95,
-      description : "It's gotta have 5 sides baby."
+      description : 'Its gotta have 5 sides baby.',
       canPurchase : false ,
     },
   ];
