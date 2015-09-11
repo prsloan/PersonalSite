@@ -8,16 +8,18 @@
 
 
   <body ng-controller="StoreController as store">
-    <div ng-repeat="product in store.products">
-      <h1> {{product.name}} </h1>
-      <h2> ${{product.price}} </h2>
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="product in store.products">
+      <h3> {{product.name}} </h3>
+      <em class="pull-right"> ${{product.price}} </em>
       <p> {{product.description}} </p>
       <button ng-show="product.canPurchase"> Add to Cart </button>
-    </div>
+    </li>
+  </ul>
 
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/app.js"></script>
-  
+
 
 
 
