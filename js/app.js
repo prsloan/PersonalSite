@@ -19,7 +19,8 @@
       price : 5.95,
       description : "It's gotta have 5 sides baby."
       canPurchase : false ,
-    }
+    },
+  ];
 
 
 
