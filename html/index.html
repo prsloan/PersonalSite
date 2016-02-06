@@ -1,39 +1,36 @@
 <!DOCTYPE html>
 
-<html ng-app="website">
+<html>
 <head>
-    <meta charset="utf-8">
-    <title>AngularJS Animate Slider</title>
+  <style>
+  html, body, #mapDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+  </style>
+
+
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Woot</title>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
+
+
+    <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
+    <script src="https://js.arcgis.com/3.15/"></script>
+    <script src="js/app.js"></script>
+
+
+    <body class="claro">
+      <div id="mapDiv"></div>
+    </body>
+
+
 </head>
 
-<body ng-controller="MainCtrl">
-  <head>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-    <script type="text/javascript" src="/js/angular.min.js"></script>
-    <script type="text/javascript" src="/js/app.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" srt="/ClarifaiTest/clari.js"> </script>
-  </head>
-
-
-  <div class="container slider">
-    <img ng-repeat="slide in slides" class="slide" ng-src="{{slide.image}}">
-    <a class="arrow prev" href="#" ng-click="nextSlide()"></a>
-     <a class="arrow next" href="#" ng-click="prevSlide()"></a>
-     <nav class="nav">
-         <div class="wrapper">
-             <ul class="dots">
-                 <li class="dot" ng-repeat="slide in slides">
-                     <a href="#" ng-class="{'active':isCurrentSlideIndex($index)}"
-                        ng-click="setCurrentSlideIndex($index);">{{slide.description}}</a></li>
-             </ul>
-         </div>
-     </nav>
- </div>
-
-
- </body>
 
 </html>
