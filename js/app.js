@@ -8,7 +8,7 @@
 
   var gems = [
     {
-      name : 'Dodecahedron',
+      name : 'This is to test the hook',
       price : 2.95,
       description : 'Twelve Sides',
       canPurchase : true ,
