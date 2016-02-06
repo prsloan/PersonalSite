@@ -1,29 +1,14 @@
-
-(function(){
-  var app = angular.module('store',[]);
-
-  app.controller('StoreController', function(){
-    this.products = gems;
-  });
-
-  var gems = [
-    {
-      name : 'This is to test the hook',
-      price : 2.95,
-      description : 'Twelve Sides',
-      canPurchase : true ,
-    },
-
-    {
-      name : 'Pentagonal Gem',
-      price : 5.95,
-      description : 'Its gotta have 5 sides baby.',
-      canPurchase : false ,
-    },
-  ];
+angular.module('website', ['ngAnimate'])
+    .controller('MainCtrl', function ($scope) { });
 
 
-
-
-
-})();
+    angular.module('website', ['ngAnimate'])
+        .controller('MainCtrl', function ($scope) {
+            $scope.slides = [
+                {image: 'img/test/test-1.jpg', description: 'Image 00'},
+                {image: 'img/test/test-1.jpg', description: 'Image 01'},
+                {image: 'img/test/test-1.jpg', description: 'Image 02'},
+                {image: 'img/test/test-1.jpg', description: 'Image 03'},
+                {image: 'img/test/test-1.jpg', description: 'Image 04'}
+            ];
+        });
