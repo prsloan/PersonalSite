@@ -143,7 +143,7 @@ var map;
               var graphic = new Graphic(geometry);
               graphic.setAttributes(attr);
               features.push(graphic);
-              if (features.length == 100){
+              if (features.length > 97){
               featureLayer.applyEdits(features, null, null);}
               }, requestFailed);
 
