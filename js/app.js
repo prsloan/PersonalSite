@@ -75,7 +75,10 @@ function parseResponse(resp) {
   $('#tags').text(tags.toString().replace(/,/g, ', '));
     console.log(tags);
   finalTags = tags;
+  if (tags!=undefined){
+  AfterTagsIsPopulated(geometry);
   return tags;
+}
 }
 
 function run(imgurl) {
@@ -225,7 +228,11 @@ function run(imgurl) {
             requestHandle2.then( function(response, io){
               run(url);
               geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
-              }).then( function(){
+
+              }, requestFailed);
+
+              function AfterTagsIsPopulated(geometry){
+
               console.log(JSON.stringify(geometry));
               attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+finalTags+" <\/p>" ;
               attr["title"] = item.title ? item.title : "Flickr Photo";
@@ -235,17 +242,17 @@ function run(imgurl) {
               features.push(graphic);
               if (features.length > 8){
               featureLayer.applyEdits(features, null, null);}
-              }, requestFailed);
 
-
-
-
-
+            }
 
         });
 
 
       }
+
+
+
+
 
       function secondRequestSucceed(response, io){
 
