@@ -24,7 +24,7 @@ var finalTags;
       ) {
 
 var AllTheData = {
-  'dataPoints' : new Array(250),
+  'dataPoints' : new Array(5000),
   'geometry' : [],
   'title' : [],
   'description': [],
@@ -115,7 +115,7 @@ function run(imgurl) {
       console.log(data.url);
       parseResponse(r, data.url);
     }).then(function(r){
-      if(AllTheData.populated.length == 250){
+      if(AllTheData.populated.length == 5000){
       runMeLast(r);}}
     );
   }
