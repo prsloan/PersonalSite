@@ -131,8 +131,8 @@ var map;
               callbackParamName : "jsoncallback"
             });
 
-            var geometry = new Point(requestHandle.then(secondRequestSucceed, requestFailed));
-
+            var coordinates[] = requestHandle.then(secondRequestSucceed, requestFailed);
+            var geometry = new Point(coordinates[0],coordinates[1]);
             attr["title"] = item.title ? item.title : "Flickr Photo";
 
 
@@ -150,10 +150,7 @@ var map;
         var long = location.longitude ;
         console.log(lat);
         console.log(long);
-        return {
-          lat : lat ,
-          long : long
-        };
+        return [lat, long];
 
       }
 
