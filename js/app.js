@@ -125,7 +125,7 @@ var map;
             var id = item.id ;
             var farm = item.farm ;
             var secret = item.secret;
-            var size = 'h';
+            var size = "_h";
             var serverID = item.server ;
 
             var requestHandle2 = esriRequest({
@@ -133,12 +133,13 @@ var map;
               callbackParamName : "jsoncallback"
             });
 
+            var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+size+".jpg" ;
 
             requestHandle2.then( function(response, io){
 
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
               console.log(JSON.stringify(geometry));
-
+              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"width = \"240\" height=\"160\" /><\/a><\/p>" ;
               attr["title"] = item.title ? item.title : "Flickr Photo";
               var graphic = new Graphic(geometry);
               graphic.setAttributes(attr);
