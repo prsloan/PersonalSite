@@ -2,7 +2,6 @@ var map;
       require([
         "esri/map",
         "esri/layers/FeatureLayer",
-        "esri/TimeExtent",
         "esri/dijit/PopupTemplate",
         "esri/request",
         "esri/geometry/Point",
@@ -10,12 +9,9 @@ var map;
         "dojo/on",
         "dojo/_base/array",
         "dojo/domReady!",
-        "esri/layers/TimeInfo"
       ], function(
         Map,
         FeatureLayer,
-        TimeInfo,
-        TimeExtent,
         PopupTemplate,
         esriRequest,
         Point,
@@ -94,7 +90,7 @@ var map;
           id: 'flickrLayer',
           infoTemplate: popupTemplate
         });
-      
+
 
         //associate the features with the popup on click
         featureLayer.on("click", function(evt) {
