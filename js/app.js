@@ -246,9 +246,9 @@ function run(imgurl) {
 
             requestHandle2.then( function(response, io){
               run(url);
-              AllTheData.geometry.push(new Point(response.photo.location.longitude, response.photo.location.latitude));
+              var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
+              AllTheData.geometry.push(geometry);
               console.log(JSON.stringify(geometry));
-
               AllTheData.title.push(item.title ? item.title : "Flickr Photo");
               var graphic = new Graphic(geometry);
               AllTheData.graphics.push(graphic);
