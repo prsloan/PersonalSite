@@ -3,6 +3,6 @@ require(["esri/map", "dojo/domReady!"], function(Map) {
 var map = new Map("mapDiv", {
 center: [-118, 34.5],
 zoom: 8,
-basemap: "World_Dark_Gray_Base"
+basemap: "dark-grey"
 });
 });
