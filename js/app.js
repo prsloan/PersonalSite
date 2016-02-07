@@ -24,10 +24,7 @@ var map;
         array
       ) {
 
-
-
         var featureLayer;
-
 
         map = new Map("mapDiv", {
           basemap: "dark-gray",
@@ -97,7 +94,7 @@ var map;
           id: 'flickrLayer',
           infoTemplate: popupTemplate
         });
-        featureLayer.setUseMapTime(true);
+      
 
         //associate the features with the popup on click
         featureLayer.on("click", function(evt) {
