@@ -136,7 +136,7 @@ var map;
 
 
             var geometry = requestHandle2.then(secondRequestSucceed, requestFailed);
-            console.log(coordinates);
+            console.log(JSON.stringify(geometry));
             attr["title"] = item.title ? item.title : "Flickr Photo";
 
 
