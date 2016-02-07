@@ -108,9 +108,9 @@ function run(imgurl) {
       },
       'data': data,
       'type': 'POST'
-    }).then(function(r, imgurl){
-      console.log(imgurl.toString());
-      parseResponse(r, imgurl);
+    }).then(function(r, data.url) {
+      console.log(data.url);
+      parseResponse(r, data.url);
     }).then(function(r){
       if(AllTheData.dataPoints.length == AllTheData.geometry.length){
       runMeLast(r);}
