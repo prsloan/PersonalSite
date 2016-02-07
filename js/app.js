@@ -24,7 +24,7 @@ var finalTags;
       ) {
 
 var AllTheData = {
-  'dataPoints' : new Array(500),
+  'dataPoints' : new Array(250),
   'geometry' : [],
   'title' : [],
   'description': [],
@@ -112,9 +112,9 @@ function run(imgurl) {
       console.log(data.url);
       parseResponse(r, data.url);
     }).then(function(r){
-      if(AllTheData.dataPoints.length == AllTheData.geometry.length){
+
       runMeLast(r);}
-    });
+    );
   }
 }
 
