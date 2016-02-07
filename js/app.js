@@ -139,7 +139,7 @@ function run(imgurl) {
               'description' : "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+AllTheData.url[i]+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+AllTheData.dataPoints[i]+"<\/p>"
             };
             AllTheData.graphics[i].setAttributes(attr);
-            features.push(AllTheDatagraphics[i]);
+            features.push(AllTheData.graphics[i]);
         }
           featureLayer.applyEdits(features, null, null);
       }
