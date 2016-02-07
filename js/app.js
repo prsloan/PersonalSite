@@ -230,7 +230,7 @@ function run(imgurl) {
 
             requestHandle2.then( function(response, io){
               run(url);
-            }
+            
               }, requestFailed);
 
 
