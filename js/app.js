@@ -135,7 +135,7 @@ var map;
             });
 
 
-            var geometry = requestHandle.then(secondRequestSucceed, requestFailed);
+            var geometry = requestHandle2.then(secondRequestSucceed, requestFailed);
             console.log(coordinates);
             attr["title"] = item.title ? item.title : "Flickr Photo";
 
