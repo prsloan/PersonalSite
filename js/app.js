@@ -46,7 +46,7 @@ function getCredentials(cb) {
   });
 }
 
-function postImage(imgurl) {
+function postImage(imgurl, response) {
   var data = {
     'url': imgurl
   };
@@ -59,12 +59,12 @@ function postImage(imgurl) {
     },
     'data': data,
     'type': 'POST'
-  }).then(function(r){
-    parseResponse(r);
+  }).then(function(r, response){
+    parseResponse(r, response);
   });
 }
 
-function parseResponse(resp) {
+function parseResponse(resp, response) {
   if (resp.status_code === 'OK') {
     var results = resp.results;
 
@@ -90,11 +90,11 @@ function parseResponse(resp) {
   return tags;
 }
 
-function run(imgurl) {
+function run(imgurl, response) {
   if (localStorage.getItem('tokenTimeStamp') - Math.floor(Date.now() / 1000) > 86400
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
-      postImage(imgurl);
+      postImage(imgurl, response);
     });
   } else {
     postImage(imgurl);
@@ -233,7 +233,7 @@ function run(imgurl) {
 
 
             requestHandle2.then( function(response, io){
-              run(url);
+              run(url,response);
 
               }, requestFailed);
 
