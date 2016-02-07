@@ -110,18 +110,17 @@ var map;
           url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a0167f062357d4dbc99e452427ab9bfb&min_upload_date=1449459707&max_upload_date=1423280507&has_geo=1&per_page=100&page=1&format=json&nojsoncallback=0",
           callbackParamName: "jsoncallback"
         });
-        console.log("poop");
         requestHandle.then(requestSucceeded, requestFailed);
       }
 
+      var features = [];
+
       function requestSucceeded(response, io) {
         //loop through the items and add to the feature layer
-        var features = [];
+
         var pages = 1 ;
-        console.log("initial call success");
-        console.log(JSON.stringify(response));
           array.forEach(response.photos.photo, function(item) {
-            console.log("poop2");
+
             var attr = {};
             var id = item.id ;
             var farm = item.farm ;
@@ -136,9 +135,9 @@ var map;
 
 
             requestHandle2.then( function(response, io){
-              console.log("second call success");
+
               var geometry = new Point(response.photo.location.latitude, response.photo.location.longitude);
-              console.log(JSON.stringify(geometry));
+              console.log(JSON.stringify(item));
               attr["title"] = item.title ? item.title : "Flickr Photo";
               var graphic = new Graphic(geometry);
               graphic.setAttributes(attr);
