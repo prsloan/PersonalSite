@@ -229,7 +229,7 @@ function run(imgurl) {
         //get geotagged photos from flickr
         //tags=flower&tagmode=all
         var requestHandle = esriRequest({
-          url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a0167f062357d4dbc99e452427ab9bfb&min_upload_date=1449459707&max_upload_date=1423280507&has_geo=1&per_page=500&page=1&format=json&nojsoncallback=0",
+          url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a0167f062357d4dbc99e452427ab9bfb&min_upload_date=1449459707&max_upload_date=1423280507&has_geo=1&per_page=250&page=1&format=json&nojsoncallback=0",
           callbackParamName: "jsoncallback"
         });
         requestHandle.then(requestSucceeded, requestFailed);
@@ -262,15 +262,15 @@ function run(imgurl) {
               AllTheData.url.push(url);
               AllTheData.otherUrl.push(otherUrl);
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
-              AllTheData.geometry.push(geometry).then(function (r){
-                run(url);
-              });
+              AllTheData.geometry.push(geometry);
               console.log(JSON.stringify(geometry));
               AllTheData.title.push(item.title ? item.title : "Flickr Photo");
               //var graphic = new Graphic(geometry);
               //AllTheData.graphics.push(graphic);
 
-            }, requestFailed);
+            }, requestFailed).then(function (r){
+              run(url);
+            });
 
 
         });
