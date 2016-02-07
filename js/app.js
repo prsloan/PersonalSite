@@ -135,14 +135,20 @@ var map;
             });
 
 
-            var geometry = requestHandle2.then(secondRequestSucceed, requestFailed);
-            console.log(JSON.stringify(geometry));
-            attr["title"] = item.title ? item.title : "Flickr Photo";
+            requestHandle2.then( function(response, io){
+              console.log("second call success");
+              var geometry = new Point(response.photo.location.latitude, response.photo.location.longitude);
+              console.log(JSON.stringify(geometry));
+              attr["title"] = item.title ? item.title : "Flickr Photo";
+              var graphic = new Graphic(geometry);
+              graphic.setAttributes(attr);
+              features.push(graphic);
+            }, requestFailed);
 
 
-            var graphic = new Graphic(geometry);
-            graphic.setAttributes(attr);
-            features.push(graphic);
+
+
+
 
         });
 
@@ -150,10 +156,7 @@ var map;
       }
 
       function secondRequestSucceed(response, io){
-        console.log("second call success");
-        var location = new Point(response.photo.location.latitude, response.photo.location.longitude);
-        console.log(JSON.stringify(location));
-        return location;
+
       }
 
 
