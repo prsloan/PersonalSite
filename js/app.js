@@ -1,5 +1,5 @@
 var map;
-
+var Alltags = [] ;
 
 function getCredentials(cb) {
   var data = {
@@ -39,7 +39,6 @@ function postImage(imgurl) {
 }
 
 function parseResponse(resp) {
-  var tags = [];
   if (resp.status_code === 'OK') {
     var results = resp.results;
 
@@ -216,7 +215,7 @@ function run(imgurl) {
 
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
 
-            var newTags = run(url);
+            Alltags[features.lenth] = run(url);
             console.log(newTags);
 
 
