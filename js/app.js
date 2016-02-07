@@ -247,7 +247,7 @@ function run(imgurl, i) {
               callbackParamName : "jsoncallback"
             });
 
-            requestHandle2.then( function(response, io){
+            requestHandle2.then( function(response, io, i){
               run(url, i);
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
               AllTheData.geometry[i] =geometry ;
