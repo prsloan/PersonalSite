@@ -138,6 +138,7 @@ var map;
 
               var geometry = new Point(response.photo.location.latitude, response.photo.location.longitude);
               console.log(JSON.stringify(item));
+                console.log(JSON.stringify(features));
               attr["title"] = item.title ? item.title : "Flickr Photo";
               var graphic = new Graphic(geometry);
               graphic.setAttributes(attr);
