@@ -94,9 +94,9 @@ function run(imgurl) {
       }).then(function(r,imgurl){
         parseResponse(r, imgurl);
       }).then(function(r){
-        if(AllTheData.dataPoints.length == AllTheData.geometry.length){
+
         runMeLast(r);}
-      });
+      );
     });
   } else {
     var accessToken = localStorage.getItem('accessToken');
