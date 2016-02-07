@@ -130,6 +130,7 @@ var map;
               url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=1",
               callbackParamName : "jsoncallback"
             });
+            console.log(response);
 
             var coordinates = requestHandle.then(secondRequestSucceed, requestFailed);
             console.log(coordinates);
