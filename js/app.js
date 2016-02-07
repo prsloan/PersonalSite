@@ -2,6 +2,31 @@ var map;
 var finalTags;
 var features = [];
 
+//Begin ESRI code
+
+      require([
+        "esri/map",
+        "esri/layers/FeatureLayer",
+        "esri/dijit/PopupTemplate",
+        "esri/request",
+        "esri/geometry/Point",
+        "esri/graphic",
+        "dojo/on",
+        "dojo/_base/array",
+        "dojo/domReady!",
+      ], function(
+        Map,
+        FeatureLayer,
+        PopupTemplate,
+        esriRequest,
+        Point,
+        Graphic,
+        on,
+        array
+      ) {
+
+
+
 function getCredentials(cb) {
   var data = {
     'grant_type': 'client_credentials',
@@ -88,28 +113,7 @@ function run(imgurl) {
 
 
 
-//Begin ESRI code
 
-      require([
-        "esri/map",
-        "esri/layers/FeatureLayer",
-        "esri/dijit/PopupTemplate",
-        "esri/request",
-        "esri/geometry/Point",
-        "esri/graphic",
-        "dojo/on",
-        "dojo/_base/array",
-        "dojo/domReady!",
-      ], function(
-        Map,
-        FeatureLayer,
-        PopupTemplate,
-        esriRequest,
-        Point,
-        Graphic,
-        on,
-        array
-      ) {
 
         var featureLayer;
 
@@ -230,13 +234,8 @@ function run(imgurl) {
 
             requestHandle2.then( function(response, io){
               run(url);
-            
+
               }, requestFailed);
-
-
-
-
-
 
         });
 
