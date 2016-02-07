@@ -65,7 +65,7 @@ function parseResponse(resp, imgurl) {
   }
 
   $('#tags').text(tags.toString().replace(/,/g, ', '));
-  for(i=0;i<500;i++){
+  for(i=0;i<250;i++){
     if (imgurl == AllTheData.url[i]){
       AllTheData.dataPoints[i] = tags;
       break;
@@ -109,6 +109,7 @@ function run(imgurl) {
       'data': data,
       'type': 'POST'
     }).then(function(r, imgurl){
+      console.log(imgurl.toString());
       parseResponse(r, imgurl);
     }).then(function(r){
       if(AllTheData.dataPoints.length == AllTheData.geometry.length){
