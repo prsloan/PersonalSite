@@ -143,7 +143,9 @@ var map;
               var graphic = new Graphic(geometry);
               graphic.setAttributes(attr);
               features.push(graphic);
-            }, requestFailed);
+              if (features.length == 100){
+              featureLayer.applyEdits(features, null, null);}
+              }, requestFailed);
 
 
 
@@ -152,7 +154,7 @@ var map;
 
         });
 
-        featureLayer.applyEdits(features, null, null);
+
       }
 
       function secondRequestSucceed(response, io){
