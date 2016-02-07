@@ -217,7 +217,7 @@ function run(imgurl) {
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
 
             var newTags = run(url);
-            console.log(JSON.stringify(newTags));
+            console.log(newTags);
 
 
 
