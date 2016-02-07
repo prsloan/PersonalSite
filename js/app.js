@@ -151,7 +151,8 @@ var map;
 
       function secondRequestSucceed(response, io){
         console.log("second call success");
-        var location = new Point(response.photo.location);
+        var location = new Point(response.photo.location.latitude, response.photo.location.longitude);
+        console.log(JSON.stringify(location));
         return location;
       }
 
