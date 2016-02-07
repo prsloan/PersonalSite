@@ -216,7 +216,7 @@ function run(imgurl) {
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
 
             Alltags[features.lenth] = run(url);
-            console.log(newTags);
+            console.log(Alltags);
 
 
 
@@ -225,7 +225,7 @@ function run(imgurl) {
 
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
               console.log(JSON.stringify(geometry));
-              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b> <\/p>" ;
+              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+Alltags[features.lenth]+" <\/p>" ;
               attr["title"] = item.title ? item.title : "Flickr Photo";
 
               var graphic = new Graphic(geometry);
