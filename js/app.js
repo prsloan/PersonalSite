@@ -101,7 +101,8 @@ var map;
           id: 'flickrLayer',
           infoTemplate: popupTemplate
         });
-
+        featureLayer.setUseMapTime(true);
+        
         //associate the features with the popup on click
         featureLayer.on("click", function(evt) {
           map.infoWindow.setFeatures([evt.graphic]);
