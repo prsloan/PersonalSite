@@ -262,15 +262,15 @@ function run(imgurl) {
               AllTheData.url.push(url);
               AllTheData.otherUrl.push(otherUrl);
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
-              AllTheData.geometry.push(geometry);
+              AllTheData.geometry.push(geometry).then(function (r){
+                run(url);
+              });
               console.log(JSON.stringify(geometry));
               AllTheData.title.push(item.title ? item.title : "Flickr Photo");
               //var graphic = new Graphic(geometry);
               //AllTheData.graphics.push(graphic);
 
-            }, requestFailed).then(function (r){
-              run(url);
-            });
+            }, requestFailed);
 
 
         });
