@@ -232,13 +232,13 @@ function run(imgurl, i) {
         var pages = 1 ;
           for(i=0; i<response.photos.photo.length; i++) {
             var item = response.photos.photo;
-            var id = item.id ;
-            var farm = item.farm ;
-            var secret = item.secret;
+            var id = item[i].id ;
+            var farm = item[i].farm ;
+            var secret = item[i].secret;
             var size = "_h";
-            var serverID = item.server ;
+            var serverID = item[i].server ;
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
-            var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\">";
+            var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+item[i].owner+"/"+id+"/\">";
             AllTheData.url[i] = url;
             AllTheData.otherUrl[i] = otherUrl;
 
