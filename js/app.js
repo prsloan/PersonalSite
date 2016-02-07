@@ -54,7 +54,7 @@ function getCredentials(cb) {
 
 
 
-function parseResponse(resp) {
+function parseResponse(resp, imgurl) {
   if (resp.status_code === 'OK') {
     var results = resp.results;
 
@@ -65,8 +65,13 @@ function parseResponse(resp) {
   }
 
   $('#tags').text(tags.toString().replace(/,/g, ', '));
-  
-  AllTheData.dataPoints.push(tags) ;
+  for(i=0;i<500;i++){
+    if (imgurl == AllTheData.url[i]){
+      AllTheData.dataPoints[i] = tags;
+      break;
+    }
+  }
+
   return tags;
 }
 
@@ -86,8 +91,8 @@ function run(imgurl) {
         },
         'data': data,
         'type': 'POST'
-      }).then(function(r){
-        parseResponse(r);
+      }).then(function(r,imgurl){
+        parseResponse(r, imgurl);
       }).then(function(r){
         if(AllTheData.dataPoints.length == AllTheData.geometry.length){
         runMeLast(r);}
@@ -103,8 +108,8 @@ function run(imgurl) {
       },
       'data': data,
       'type': 'POST'
-    }).then(function(r){
-      parseResponse(r);
+    }).then(function(r. imgurl){
+      parseResponse(r, imgurl);
     }).then(function(r){
       if(AllTheData.dataPoints.length == AllTheData.geometry.length){
       runMeLast(r);}
