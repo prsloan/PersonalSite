@@ -1,29 +1,36 @@
 var map;
 var finalTags;
+//Begin ESRI code
 
-require([
-  "esri/map",
-  "esri/layers/FeatureLayer",
-  "esri/dijit/PopupTemplate",
-  "esri/request",
-  "esri/geometry/Point",
-  "esri/graphic",
-  "dojo/on",
-  "dojo/_base/array",
-  "dojo/domReady!",
-], function(
-  Map,
-  FeatureLayer,
-  PopupTemplate,
-  esriRequest,
-  Point,
-  Graphic,
-  on,
-  array
-) {
+      require([
+        "esri/map",
+        "esri/layers/FeatureLayer",
+        "esri/dijit/PopupTemplate",
+        "esri/request",
+        "esri/geometry/Point",
+        "esri/graphic",
+        "dojo/on",
+        "dojo/_base/array",
+        "dojo/domReady!",
+      ], function(
+        Map,
+        FeatureLayer,
+        PopupTemplate,
+        esriRequest,
+        Point,
+        Graphic,
+        on,
+        array
+      ) {
 
-
-
+var AllTheData = {
+  'dataPoints' : [],
+  'geometry' : [],
+  'title' : [],
+  'description': [],
+  'graphics':[],
+  'url':[]
+};
 
 function getCredentials(cb) {
   var data = {
@@ -44,7 +51,7 @@ function getCredentials(cb) {
   });
 }
 
-function postImage(imgurl, geometry) {
+function postImage(imgurl) {
   var data = {
     'url': imgurl
   };
@@ -57,12 +64,14 @@ function postImage(imgurl, geometry) {
     },
     'data': data,
     'type': 'POST'
-  }).then(function(r, geometry){
-    parseResponse(r, geometry);
+  }).then(function(r){
+    parseResponse(r).then(function(r){
+      runMeLast(r);
+    });
   });
 }
 
-function parseResponse(resp, geometry) {
+function parseResponse(resp) {
   if (resp.status_code === 'OK') {
     var results = resp.results;
 
@@ -74,21 +83,18 @@ function parseResponse(resp, geometry) {
 
   $('#tags').text(tags.toString().replace(/,/g, ', '));
     console.log(tags);
-  finalTags = tags;
-  if (tags!==undefined){
-  AfterTagsIsPopulated(geometry);
+  AllTheData.dataPoints.push(tags) ;
   return tags;
 }
-}
 
-function run(imgurl, geometry) {
+function run(imgurl) {
   if (localStorage.getItem('tokenTimeStamp') - Math.floor(Date.now() / 1000) > 86400
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
-      postImage(imgurl, geometry);
+      postImage(imgurl);
     });
   } else {
-    postImage(imgurl, geometry);
+    postImage(imgurl);
   }
 }
 
@@ -103,8 +109,6 @@ function run(imgurl, geometry) {
 
 
 
-
-//Begin ESRI code
 
 
 
@@ -127,7 +131,18 @@ function run(imgurl, geometry) {
           }
         });
 
-
+        function runMeLast(r){
+          var features = [];
+          for(i=0; i<AllTheData.dataPoints.length;i++){
+            var attr = {
+              'title' : AllTheData.title[i]   ,
+              'description' : "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+AllTheData.url[i]+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+AllTheData.dataPoints[i]+"<\/p>"
+            };
+            AllTheData.graphics[i].setAttributes(attr);
+            features.push(AllTheDatagraphics[i]);
+        }
+          featureLayer.applyEdits(features, null, null);
+      }
 
         //create a feature collection for the flickr photos
         var featureCollection = {
@@ -202,7 +217,7 @@ function run(imgurl, geometry) {
         requestHandle.then(requestSucceeded, requestFailed);
       }
 
-      var features = [];
+
 
       function requestSucceeded(response, io) {
         //loop through the items and add to the feature layer
@@ -210,48 +225,36 @@ function run(imgurl, geometry) {
         var pages = 1 ;
           array.forEach(response.photos.photo, function(item) {
 
-            var attr = {};
+
             var id = item.id ;
             var farm = item.farm ;
             var secret = item.secret;
             var size = "_h";
             var serverID = item.server ;
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
+            AllTheData.url.push(url);
 
             var requestHandle2 = esriRequest({
               url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=0",
               callbackParamName : "jsoncallback"
             });
 
-            var geometry;
+
 
             requestHandle2.then( function(response, io){
-              geometry = new Point(response.photo.location.longitude, response.photo.location.latitude).then(
-              run(url, geometry));
+              run(url);
+              AllTheData.geometry.push(new Point(response.photo.location.longitude, response.photo.location.latitude));
+              console.log(JSON.stringify(geometry));
+
+              AllTheData.title.push(item.title ? item.title : "Flickr Photo");
+              var graphic = new Graphic(geometry);
+              AllTheData.graphics.push(graphic);
+
               }, requestFailed);
 
 
-
         });
-
-
       }
-
-      function AfterTagsIsPopulated(geometry){
-
-      console.log(JSON.stringify(geometry));
-      attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+finalTags+" <\/p>" ;
-      attr["title"] = item.title ? item.title : "Flickr Photo";
-
-      var graphic = new Graphic(geometry);
-      graphic.setAttributes(attr);
-      features.push(graphic);
-      if (features.length > 8){
-      featureLayer.applyEdits(features, null, null);}
-
-    }
-
-
 
       function secondRequestSucceed(response, io){
 
