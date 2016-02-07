@@ -19,9 +19,18 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Woot</title>
+
+<!--   ADDING LOTS OF SCRIPTS AND STUFF   -->
+
+
     <link href="css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- Load Leaflet from CDN-->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"></script>
 
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
 
     <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
     <script src="https://js.arcgis.com/3.15/"></script>
@@ -36,6 +45,20 @@
 
       </div>
     </body>
+
+    <div id="time-ranges" class="leaflet-bar">
+  <form action="#" id="form">
+    <label for="from">
+      From
+      <input id='from' type="date" value='2011-01-01' name='from'>
+    </label>
+    <label for="to">
+      To
+      <input  id='to' type="date" value='2011-03-31' name='to'>
+    </label>
+    <input type="submit" value="Update">
+  </form>
+</div>
 
 
 
