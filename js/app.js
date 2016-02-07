@@ -107,7 +107,7 @@ var map;
         //get geotagged photos from flickr
         //tags=flower&tagmode=all
         var requestHandle = esriRequest({
-          url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a0167f062357d4dbc99e452427ab9bfb&min_upload_date=1449459707&max_upload_date=1423280507&has_geo=1&format=json&nojsoncallback=1",
+          url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a0167f062357d4dbc99e452427ab9bfb&min_upload_date=1449459707&max_upload_date=1423280507&has_geo=1&per_page=100&page=1&format=json&nojsoncallback=1",
           callbackParamName: "jsoncallback"
         });
         requestHandle.then(requestSucceeded, requestFailed);
@@ -116,20 +116,47 @@ var map;
       function requestSucceeded(response, io) {
         //loop through the items and add to the feature layer
         var features = [];
-        array.forEach(response.items, function(item) {
-          var attr = {};
-          attr["description"] = item.description;
-          attr["title"] = item.title ? item.title : "Flickr Photo";
+        var pages = 1 ;
 
-          var geometry = new Point(item);
+          array.forEach(response.photo, function(item) {
+            var attr = {};
+            var id = item.id ;
+            var farm = item.farm ;
+            var secret = item.secret;
+            var size = 'h';
+            var serverID = item.server ;
 
-          var graphic = new Graphic(geometry);
-          graphic.setAttributes(attr);
-          features.push(graphic);
+            var requestHandle = esriRequest({
+              url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=1",
+              callbackParamName : "jsoncallback"
+            });
+
+            var geometry = new Point(requestHandle.then(secondRequestSucceed, requestFailed));
+
+            attr["title"] = item.title ? item.title : "Flickr Photo";
+
+
+            var graphic = new Graphic(geometry);
+            graphic.setAttributes(attr);
+            features.push(graphic);
+
         });
 
         featureLayer.applyEdits(features, null, null);
       }
+
+      function secondRequestSucceed(response, io){
+        var lat = photo.location.latitude ;
+        var long = photo.location.longitude ;
+        console.log(lat);
+        console.log(long);
+        return {
+          lat : lat ,
+          long : long
+        };
+
+      }
+
 
       function requestFailed(error) {
         console.log('failed');
