@@ -24,7 +24,7 @@ var finalTags;
       ) {
 
 var AllTheData = {
-  'dataPoints' : new Array(500),
+  'dataPoints' : new Array(250),
   'geometry' : [],
   'title' : [],
   'description': [],
@@ -112,6 +112,7 @@ function run(imgurl) {
       'data': data,
       'type': 'POST'
     }).then(function(r) {
+      console.log(data.url);
       parseResponse(r, data.url);
     }).then(function(r){
       if(AllTheData.populated.length == 250){
@@ -231,11 +232,14 @@ function run(imgurl) {
         //add the feature layer that contains the flickr photos to the map
         map.addLayers([featureLayer]);
 
+      var pages = 21 ;
+
+      for(j=1;j<pages;j++){
       function requestPhotos() {
         //get geotagged photos from flickr
         //tags=flower&tagmode=all
         var requestHandle = esriRequest({
-          url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=1c3ec063d7ec928228bb799d059ba282&min_upload_date=1449459707&max_upload_date=1423280507&has_geo=1&per_page=500&page=1&format=json&nojsoncallback=0",
+          url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=1c3ec063d7ec928228bb799d059ba282&min_upload_date=1449459707&max_upload_date=1423280507&has_geo=1&per_page=250&page="+j+"&format=json&nojsoncallback=0",
           callbackParamName: "jsoncallback"
         });
         requestHandle.then(requestSucceeded, requestFailed);
@@ -246,7 +250,7 @@ function run(imgurl) {
       function requestSucceeded(response, io) {
         //loop through the items and add to the feature layer
 
-        var pages = 1 ;
+
           array.forEach(response.photos.photo, function(item) {
 
             var id = item.id ;
@@ -279,7 +283,7 @@ function run(imgurl) {
 
 
         });
-      }
+      }}
 
       function secondRequestSucceed(response, io){
 
