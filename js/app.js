@@ -1,5 +1,6 @@
 var map;
 var finalTags;
+var features = [];
 
 function getCredentials(cb) {
   var data = {
@@ -43,6 +44,16 @@ function parseResponse(resp) {
     var results = resp.results;
 
     tags = results[0].result.tag.classes;
+    var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
+    console.log(JSON.stringify(geometry));
+    attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+tags+" <\/p>" ;
+    attr["title"] = item.title ? item.title : "Flickr Photo";
+
+    var graphic = new Graphic(geometry);
+    graphic.setAttributes(attr);
+    features.push(graphic);
+    if (features.length > 8){
+    featureLayer.applyEdits(features, null, null);}
     console.log(tags);
   } else {
     console.log('Sorry, something is wrong.');
@@ -194,7 +205,7 @@ function run(imgurl) {
         requestHandle.then(requestSucceeded, requestFailed);
       }
 
-      var features = [];
+
 
       function requestSucceeded(response, io) {
         //loop through the items and add to the feature layer
@@ -209,7 +220,7 @@ function run(imgurl) {
             var size = "_h";
             var serverID = item.server ;
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
-            run(url);
+
             var requestHandle2 = esriRequest({
               url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=0",
               callbackParamName : "jsoncallback"
@@ -218,18 +229,8 @@ function run(imgurl) {
 
 
             requestHandle2.then( function(response, io){
-
-              var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
-
-              console.log(JSON.stringify(geometry));
-              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+finalTags+" <\/p>" ;
-              attr["title"] = item.title ? item.title : "Flickr Photo";
-
-              var graphic = new Graphic(geometry);
-              graphic.setAttributes(attr);
-              features.push(graphic);
-              if (features.length > 8){
-              featureLayer.applyEdits(features, null, null);}
+              run(url);
+            }
               }, requestFailed);
 
 
