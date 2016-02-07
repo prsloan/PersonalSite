@@ -25,8 +25,8 @@ var NUMBER_OF_QUERIES = 10;
       ) {
 
 var AllTheData = {
-  'dataPoints' : new Array(NUMBER_OF_QUERIES),
-  'geometry' : new Array(NUMBER_OF_QUERIES),
+  'dataPoints' : [],
+  'geometry' : [],
   'title' : new Array(NUMBER_OF_QUERIES),
   'description': new Array(NUMBER_OF_QUERIES),
   'graphics':new Array(NUMBER_OF_QUERIES),
@@ -66,11 +66,11 @@ function postImage(imgurl, i) {
     },
     'data': data,
     'type': 'POST'
-  }).then(function(r, i){
-    parseResponse(r, i);
-  }).then(function(r, i){
+  }).then(function(r){
+    parseResponse(r);
+  }).then(function(r){
     if(AllTheData.dataPoints.length == AllTheData.geometry.length){
-    runMeLast(r , i);}
+    runMeLast(r);}
   });
 }
 
@@ -86,7 +86,7 @@ function parseResponse(resp , i) {
 
   $('#tags').text(tags.toString().replace(/,/g, ', '));
 
-  AllTheData.dataPoints[i] =tags ;
+  AllTheData.dataPoints.push(tags) ;
   return tags;
 }
 
@@ -94,10 +94,10 @@ function run(imgurl, i) {
   if (localStorage.getItem('tokenTimeStamp') - Math.floor(Date.now() / 1000) > 86400
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
-      postImage(imgurl, i);
+      postImage(imgurl);
     });
   } else {
-    postImage(imgurl, i);
+    postImage(imgurl);
   }
 }
 
@@ -241,18 +241,19 @@ function run(imgurl, i) {
             var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+item[i].owner+"/"+id+"/\">";
             AllTheData.url[i] = url;
             AllTheData.otherUrl[i] = otherUrl;
+            AllTheData.title[i] = item.title ? item.title : "Flickr Photo";
+            run(url);
 
             var requestHandle2 = esriRequest({
               url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=0",
               callbackParamName : "jsoncallback"
             });
 
-            requestHandle2.then( function(response, io, i){
-              run(url, i);
+            requestHandle2.then( function(response, io){
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
-              AllTheData.geometry[i] =geometry ;
+              AllTheData.geometry.push(geometry) ;
               console.log(JSON.stringify(geometry));
-              AllTheData.title[i] = item.title ? item.title : "Flickr Photo";
+
               //var graphic = new Graphic(geometry);
               //AllTheData.graphics.push(graphic);
 
