@@ -24,8 +24,8 @@ var map;
 
         map = new Map("mapDiv", {
           basemap: "dark-gray",
-          center: [-46.807, 32.553],
-          zoom: 8
+          center: [34.05574, -117.820],
+          zoom: 5
         });
 
         //hide the popup if its outside the map's extent
@@ -54,7 +54,7 @@ var map;
               "type": "simple",
               "symbol": {
                 "type": "esriPMS",
-                "url": "images/flickr.png",
+                "url": "img/social_flickr.png",
                 "contentType": "image/png",
                 "width": 15,
                 "height": 15
