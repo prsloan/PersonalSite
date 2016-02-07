@@ -132,6 +132,7 @@ var map;
             });
 
             var coordinates = requestHandle.then(secondRequestSucceed, requestFailed);
+            console.log(coordinates);
             var geometry = new Point(coordinates[0],coordinates[1]);
             attr["title"] = item.title ? item.title : "Flickr Photo";
 
