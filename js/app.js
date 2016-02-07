@@ -44,12 +44,13 @@ function parseResponse(resp) {
     var results = resp.results;
 
     tags = results[0].result.tag.classes;
-
+    console.log(tags);
   } else {
     console.log('Sorry, something is wrong.');
   }
 
   $('#tags').text(tags.toString().replace(/,/g, ', '));
+    console.log(tags);
   return tags;
 }
 
@@ -67,6 +68,7 @@ function run(imgurl) {
 
 
 
+//  End of Clarifai Code
 
 
 
@@ -75,27 +77,7 @@ function run(imgurl) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Begin ESRI code
 
       require([
         "esri/map",
