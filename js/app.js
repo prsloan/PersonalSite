@@ -2,7 +2,6 @@ var map;
       require([
         "esri/map",
         "esri/layers/FeatureLayer",
-        "esri/dijit/TimeSlider",
         "esri/TimeExtent",
         "esri/dijit/PopupTemplate",
         "esri/request",
@@ -15,7 +14,6 @@ var map;
       ], function(
         Map,
         FeatureLayer,
-        TimeSlider,
         TimeInfo,
         TimeExtent,
         PopupTemplate,
@@ -29,7 +27,7 @@ var map;
 
 
         var featureLayer;
-        
+
 
         map = new Map("mapDiv", {
           basemap: "dark-gray",
@@ -48,40 +46,8 @@ var map;
           }
         });
 
-        map.on("layers-add-result", initSlider);
 
-        function initSlider() {
-         var timeSlider = new TimeSlider({
-           style: "width: 100%;"
-         }, dom.byId("timeSliderDiv"));
-         map.setTimeSlider(timeSlider);
 
-         var timeExtent = new TimeExtent();
-         timeExtent.startTime = new Date("1/1/1921 UTC");
-         timeExtent.endTime = new Date("12/31/2009 UTC");
-         timeSlider.setThumbCount(2);
-         timeSlider.createTimeStopsByTimeInterval(timeExtent, 2, "esriTimeUnitsYears");
-         timeSlider.setThumbIndexes([0,1]);
-         timeSlider.setThumbMovingRate(2000);
-         timeSlider.startup();
-
-         //add labels for every other time stop
-         var labels = arrayUtils.map(timeSlider.timeStops, function(timeStop, i) {
-           if ( i % 2 === 0 ) {
-             return timeStop.getUTCFullYear();
-           } else {
-             return "";
-           }
-         });
-
-         timeSlider.setLabels(labels);
-
-         timeSlider.on("time-extent-change", function(evt) {
-           var startValString = evt.startTime.getUTCFullYear();
-           var endValString = evt.endTime.getUTCFullYear();
-           dom.byId("daterange").innerHTML = "<i>" + startValString + " and " + endValString  + "<\/i>";
-         });
-       }
         //create a feature collection for the flickr photos
         var featureCollection = {
           "layerDefinition": null,
