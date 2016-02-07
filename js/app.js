@@ -115,7 +115,7 @@ function run(imgurl) {
       console.log(data.url);
       parseResponse(r, data.url);
     }).then(function(r){
-      if(AllTheData.populated.length == 5000){
+      if(AllTheData.populated.length == 250){
       runMeLast(r);}}
     );
   }
