@@ -231,14 +231,14 @@ function run(imgurl, i) {
 
         var pages = 1 ;
           for(i=0; i<response.photos.photo.length; i++) {
-
-            var id = response.photos.photo.id ;
-            var farm = response.photos.photo.farm ;
-            var secret = response.photos.photo.secret;
+            var item = response.photos;
+            var id = item.id ;
+            var farm = item.farm ;
+            var secret = item.secret;
             var size = "_h";
-            var serverID = response.photos.photo.server ;
+            var serverID = item.server ;
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
-            var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+response.photos.owner+"/"+id+"/\">";
+            var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\">";
             AllTheData.url[i] = url;
             AllTheData.otherUrl[i] = otherUrl;
 
