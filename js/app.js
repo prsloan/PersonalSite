@@ -78,13 +78,13 @@ function parseResponse(resp) {
     var results = resp.results;
 
     tags = results[0].result.tag.classes;
-    console.log(tags);
+
   } else {
     console.log('Sorry, something is wrong.');
   }
 
   $('#tags').text(tags.toString().replace(/,/g, ', '));
-    console.log(tags);
+
   AllTheData.dataPoints.push(tags) ;
   return tags;
 }
@@ -137,6 +137,7 @@ function run(imgurl) {
           var features = [];
           console.log(JSON.stringify(AllTheData.dataPoints));
           console.log(JSON.stringify(AllTheData.url));
+          console.log(JSON.stringify(AllTheData.geometry));
           for(i=0; i<AllTheData.dataPoints.length;i++){
             var attr = {
               'title' : AllTheData.title[i]   ,
