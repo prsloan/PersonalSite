@@ -118,7 +118,7 @@ var map;
         var features = [];
         var pages = 1 ;
 
-          array.forEach(response.photos.photo, function(item) {
+          array.forEach(response.photo, function(item) {
             var attr = {};
             var id = item.id ;
             var farm = item.farm ;
