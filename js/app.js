@@ -244,7 +244,7 @@ function run(imgurl) {
         });
         requestHandle.then(requestSucceeded, requestFailed);
       }
-
+    }
 
 
       function requestSucceeded(response, io) {
@@ -283,7 +283,7 @@ function run(imgurl) {
 
 
         });
-      }}
+      }
 
       function secondRequestSucceed(response, io){
 
