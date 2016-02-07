@@ -134,6 +134,7 @@ function run(imgurl) {
 
         function runMeLast(r){
           var features = [];
+          console.log(JSON.stringify(AllTheData));
           for(i=0; i<AllTheData.dataPoints.length;i++){
             var attr = {
               'title' : AllTheData.title[i]   ,
