@@ -42,8 +42,9 @@ function parseResponse(resp) {
   var tags = [];
   if (resp.status_code === 'OK') {
     var results = resp.results;
-    console.log(JSON.stringify(results));
+
     tags = results[0].result.tag.classes;
+    console.log(JSON.stringify(tags));
   } else {
     console.log('Sorry, something is wrong.');
   }
@@ -205,7 +206,7 @@ function run(imgurl) {
         //get geotagged photos from flickr
         //tags=flower&tagmode=all
         var requestHandle = esriRequest({
-          url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a0167f062357d4dbc99e452427ab9bfb&min_upload_date=1449459707&max_upload_date=1423280507&has_geo=1&per_page=100&page=1&format=json&nojsoncallback=0",
+          url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a0167f062357d4dbc99e452427ab9bfb&min_upload_date=1449459707&max_upload_date=1423280507&has_geo=1&per_page=10&page=1&format=json&nojsoncallback=0",
           callbackParamName: "jsoncallback"
         });
         requestHandle.then(requestSucceeded, requestFailed);
@@ -234,6 +235,8 @@ function run(imgurl) {
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
 
             var newTags = run(url);
+
+
 
 
             requestHandle2.then( function(response, io){
