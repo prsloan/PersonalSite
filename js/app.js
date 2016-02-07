@@ -76,13 +76,18 @@ var map;
             "name": "title",
             "alias": "Title",
             "type": "esriFieldTypeString"
+          },{
+            "name": "keywords",
+            "alias" :"Keywords",
+            "type"  :"esriFieldTypeString"
           }]
         };
 
         //define a popup template
         var popupTemplate = new PopupTemplate({
           title: "{title}",
-          description: "{description}"
+          description: "{description}",
+          keywords: "{keywords}"
         });
 
         //create a feature layer based on the feature collection
