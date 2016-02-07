@@ -68,7 +68,8 @@ function postImage(imgurl) {
   }).then(function(r){
     parseResponse(r);
   }).then(function(r){
-    runMeLast(r);
+    if(AllTheData.dataPoints.length == AllTheData.geometry.length){
+    runMeLast(r);}
   });
 }
 
@@ -134,7 +135,8 @@ function run(imgurl) {
 
         function runMeLast(r){
           var features = [];
-          console.log(JSON.stringify(AllTheData));
+          console.log(JSON.stringify(AllTheData.dataPoints));
+          console.log(JSON.stringify(AllTheData.url));
           for(i=0; i<AllTheData.dataPoints.length;i++){
             var attr = {
               'title' : AllTheData.title[i]   ,
