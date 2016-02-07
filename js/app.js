@@ -50,7 +50,7 @@ function parseResponse(resp) {
 
   $('#tags').text(tags.toString().replace(/,/g, ', '));
     console.log(tags);
-  finalTags = Tags;
+  finalTags = tags;
   return tags;
 }
 
