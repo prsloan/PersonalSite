@@ -76,10 +76,6 @@ var map;
             "name": "title",
             "alias": "Title",
             "type": "esriFieldTypeString"
-          },{
-            "name": "keywords",
-            "alias" :"Keywords",
-            "type"  :"esriFieldTypeString"
           }]
         };
 
@@ -144,9 +140,9 @@ var map;
 
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
               console.log(JSON.stringify(geometry));
-              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p>" ;
+              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b> <\/p>" ;
               attr["title"] = item.title ? item.title : "Flickr Photo";
-              attr["keywords"] = "TEST";
+
               var graphic = new Graphic(geometry);
               graphic.setAttributes(attr);
               features.push(graphic);
