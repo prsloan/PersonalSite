@@ -237,7 +237,7 @@ function run(imgurl, i) {
             var size = "_h";
             var serverID = response.photos.photo.server ;
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
-            var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\">";
+            var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+response.photos.owner+"/"+id+"/\">";
             AllTheData.url[i] = url;
             AllTheData.otherUrl[i] = otherUrl;
 
