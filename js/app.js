@@ -142,8 +142,9 @@ function run(imgurl) {
               'title' : AllTheData.title[i]   ,
               'description' : AllTheData.otherUrl[i]+"<img src=\""+AllTheData.url[i]+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+AllTheData.dataPoints[i]+"<\/p>"
             };
-            AllTheData.graphics[i].setAttributes(attr);
-            features.push(AllTheData.graphics[i]);
+            var graphic = new graphic(AllTheData.geometry[i]);
+            graphic.setAttributes(attr);
+            features.push(graphic);
         }
           featureLayer.applyEdits(features, null, null);
       }
@@ -253,8 +254,8 @@ function run(imgurl) {
               AllTheData.geometry.push(geometry);
               console.log(JSON.stringify(geometry));
               AllTheData.title.push(item.title ? item.title : "Flickr Photo");
-              var graphic = new Graphic(geometry);
-              AllTheData.graphics.push(graphic);
+              //var graphic = new Graphic(geometry);
+              //AllTheData.graphics.push(graphic);
 
               }, requestFailed);
 
