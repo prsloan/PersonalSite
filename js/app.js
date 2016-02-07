@@ -44,7 +44,7 @@ function getCredentials(cb) {
   });
 }
 
-function postImage(imgurl) {
+function postImage(imgurl, geometry) {
   var data = {
     'url': imgurl
   };
@@ -57,12 +57,12 @@ function postImage(imgurl) {
     },
     'data': data,
     'type': 'POST'
-  }).then(function(r){
-    parseResponse(r);
+  }).then(function(r, geometry){
+    parseResponse(r, geometry);
   });
 }
 
-function parseResponse(resp) {
+function parseResponse(resp, geometry) {
   if (resp.status_code === 'OK') {
     var results = resp.results;
 
@@ -75,20 +75,20 @@ function parseResponse(resp) {
   $('#tags').text(tags.toString().replace(/,/g, ', '));
     console.log(tags);
   finalTags = tags;
-  if (tags!=undefined){
+  if (tags!==undefined){
   AfterTagsIsPopulated(geometry);
   return tags;
 }
 }
 
-function run(imgurl) {
+function run(imgurl, geometry) {
   if (localStorage.getItem('tokenTimeStamp') - Math.floor(Date.now() / 1000) > 86400
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
-      postImage(imgurl);
+      postImage(imgurl, geometry);
     });
   } else {
-    postImage(imgurl);
+    postImage(imgurl, geometry);
   }
 }
 
@@ -226,31 +226,30 @@ function run(imgurl) {
             var geometry;
 
             requestHandle2.then( function(response, io){
-              run(url);
-              geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
-
+              geometry = new Point(response.photo.location.longitude, response.photo.location.latitude).then(
+              run(url, geometry));
               }, requestFailed);
 
-              function AfterTagsIsPopulated(geometry){
 
-              console.log(JSON.stringify(geometry));
-              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+finalTags+" <\/p>" ;
-              attr["title"] = item.title ? item.title : "Flickr Photo";
-
-              var graphic = new Graphic(geometry);
-              graphic.setAttributes(attr);
-              features.push(graphic);
-              if (features.length > 8){
-              featureLayer.applyEdits(features, null, null);}
-
-            }
 
         });
 
 
       }
 
+      function AfterTagsIsPopulated(geometry){
 
+      console.log(JSON.stringify(geometry));
+      attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+finalTags+" <\/p>" ;
+      attr["title"] = item.title ? item.title : "Flickr Photo";
+
+      var graphic = new Graphic(geometry);
+      graphic.setAttributes(attr);
+      features.push(graphic);
+      if (features.length > 8){
+      featureLayer.applyEdits(features, null, null);}
+
+    }
 
 
 
