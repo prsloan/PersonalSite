@@ -136,7 +136,7 @@ var map;
 
             requestHandle2.then( function(response, io){
 
-              var geometry = new Point(response.photo.location.latitude, response.photo.location.longitude);
+              var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
               console.log(JSON.stringify(geometry));
 
               attr["title"] = item.title ? item.title : "Flickr Photo";
@@ -144,7 +144,6 @@ var map;
               graphic.setAttributes(attr);
               features.push(graphic);
               if (features.length > 97){
-                console.log(JSON.stringify(features));
               featureLayer.applyEdits(features, null, null);}
               }, requestFailed);
 
