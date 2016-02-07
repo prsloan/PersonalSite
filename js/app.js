@@ -52,7 +52,7 @@ function getCredentials(cb) {
   });
 }
 
-function postImage(imgurl) {
+function postImage(imgurl, i) {
   var data = {
     'url': imgurl
   };
@@ -65,15 +65,15 @@ function postImage(imgurl) {
     },
     'data': data,
     'type': 'POST'
-  }).then(function(r){
-    parseResponse(r);
-  }).then(function(r){
+  }).then(function(r, i){
+    parseResponse(r, i);
+  }).then(function(r, i){
     if(AllTheData.dataPoints.length == AllTheData.geometry.length){
-    runMeLast(r);}
+    runMeLast(r , i);}
   });
 }
 
-function parseResponse(resp) {
+function parseResponse(resp , i) {
   if (resp.status_code === 'OK') {
     var results = resp.results;
 
@@ -85,18 +85,18 @@ function parseResponse(resp) {
 
   $('#tags').text(tags.toString().replace(/,/g, ', '));
 
-  AllTheData.dataPoints.push(tags) ;
+  AllTheData.dataPoints[i] =tags ;
   return tags;
 }
 
-function run(imgurl) {
+function run(imgurl, i) {
   if (localStorage.getItem('tokenTimeStamp') - Math.floor(Date.now() / 1000) > 86400
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
-      postImage(imgurl);
+      postImage(imgurl, i);
     });
   } else {
-    postImage(imgurl);
+    postImage(imgurl, i);
   }
 }
 
@@ -133,7 +133,7 @@ function run(imgurl) {
           }
         });
 
-        function runMeLast(r){
+        function runMeLast(r, index){
           var features = [];
           console.log(JSON.stringify(AllTheData.dataPoints));
           console.log(JSON.stringify(AllTheData.url));
@@ -229,39 +229,34 @@ function run(imgurl) {
         //loop through the items and add to the feature layer
 
         var pages = 1 ;
-          array.forEach(response.photos.photo, function(item) {
+          for(i=0; i<response.photos.photo.length; i++) {
 
-
-            var id = item.id ;
-            var farm = item.farm ;
-            var secret = item.secret;
+            var id = response.photos.photo.id ;
+            var farm = response.photos.photo.farm ;
+            var secret = response.photos.photo.secret;
             var size = "_h";
-            var serverID = item.server ;
+            var serverID = response.photos.photo.server ;
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
             var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\">";
-            AllTheData.url.push(url);
-            AllTheData.otherUrl.push(otherUrl);
+            AllTheData.url[i] = url;
+            AllTheData.otherUrl[i] = otherUrl;
 
             var requestHandle2 = esriRequest({
               url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=0",
               callbackParamName : "jsoncallback"
             });
 
-
-
             requestHandle2.then( function(response, io){
-              run(url);
+              run(url, i);
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
-              AllTheData.geometry.push(geometry);
+              AllTheData.geometry[i] =geometry ;
               console.log(JSON.stringify(geometry));
-              AllTheData.title.push(item.title ? item.title : "Flickr Photo");
+              AllTheData.title[i] = item.title ? item.title : "Flickr Photo";
               //var graphic = new Graphic(geometry);
               //AllTheData.graphics.push(graphic);
 
               }, requestFailed);
-
-
-        });
+        }
       }
 
       function secondRequestSucceed(response, io){
