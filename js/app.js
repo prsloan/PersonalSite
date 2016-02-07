@@ -108,7 +108,7 @@ function run(imgurl) {
       },
       'data': data,
       'type': 'POST'
-    }).then(function(r, data.url) {
+    }).then(function(r) {
       console.log(data.url);
       parseResponse(r, data.url);
     }).then(function(r){
