@@ -44,7 +44,7 @@ function parseResponse(resp) {
     var results = resp.results;
 
     tags = results[0].result.tag.classes;
-    console.log(JSON.stringify(tags));
+
   } else {
     console.log('Sorry, something is wrong.');
   }
@@ -235,6 +235,7 @@ function run(imgurl) {
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
 
             var newTags = run(url);
+            console.log(JSON.stringify(newTags));
 
 
 
@@ -249,7 +250,7 @@ function run(imgurl) {
               var graphic = new Graphic(geometry);
               graphic.setAttributes(attr);
               features.push(graphic);
-              if (features.length > 97){
+              if (features.length > 8){
               featureLayer.applyEdits(features, null, null);}
               }, requestFailed);
 
