@@ -2,16 +2,22 @@ var map;
       require([
         "esri/map",
         "esri/layers/FeatureLayer",
+        "esri/dijit/TimeSlider",
+        "esri/TimeExtent",
         "esri/dijit/PopupTemplate",
         "esri/request",
         "esri/geometry/Point",
         "esri/graphic",
         "dojo/on",
         "dojo/_base/array",
-        "dojo/domReady!"
+        "dojo/domReady!",
+        "esri/layers/TimeInfo"
       ], function(
         Map,
         FeatureLayer,
+        TimeSlider,
+        TimeInfo,
+        TimeExtent,
         PopupTemplate,
         esriRequest,
         Point,
@@ -20,13 +26,21 @@ var map;
         array
       ) {
 
+        var timeSlider = new TimeSlider({}, dom.byId("timeSliderDiv"));
+
         var featureLayer;
+        var time = new TimeExtent(new Date (2014, 1,1), new Date (Date.now()));
 
         map = new Map("mapDiv", {
           basemap: "dark-gray",
           center: [-117.820, 34.05574 ],
           zoom: 5
         });
+
+        map.setTimeSlider(timeSlider);
+        timeSlider.setThumbCount(1);
+        timeSlider.createTimeStopsByTimeInterval(result, 1,TimeInfo.UNIT_DAYS );
+        timeSlider.startup();
 
         //hide the popup if its outside the map's extent
         map.on("mouse-drag", function(evt) {
