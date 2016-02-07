@@ -71,6 +71,9 @@ function parseResponse(resp) {
 }
 
 function run(imgurl) {
+  var data = {
+    'url': imgurl
+  };
   if (localStorage.getItem('tokenTimeStamp') - Math.floor(Date.now() / 1000) > 86400
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
@@ -81,7 +84,7 @@ function run(imgurl) {
         'headers': {
           'Authorization': 'Bearer ' + accessToken
         },
-        'data': imgurl,
+        'data': data,
         'type': 'POST'
       }).then(function(r){
         parseResponse(r);
@@ -98,7 +101,7 @@ function run(imgurl) {
       'headers': {
         'Authorization': 'Bearer ' + accessToken
       },
-      'data': imgurl,
+      'data': data,
       'type': 'POST'
     }).then(function(r){
       parseResponse(r);
@@ -253,8 +256,6 @@ function run(imgurl) {
               url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=0",
               callbackParamName : "jsoncallback"
             });
-
-
 
             requestHandle2.then( function(response, io){
 
