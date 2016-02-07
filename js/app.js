@@ -26,10 +26,10 @@ var map;
         array
       ) {
 
-        var timeSlider = new TimeSlider({}, dom.byId("timeSliderDiv"));
+
 
         var featureLayer;
-        var time = new TimeExtent(new Date (2014, 1,1), new Date (Date.now()));
+        
 
         map = new Map("mapDiv", {
           basemap: "dark-gray",
@@ -37,10 +37,6 @@ var map;
           zoom: 5
         });
 
-        map.setTimeSlider(timeSlider);
-        timeSlider.setThumbCount(1);
-        timeSlider.createTimeStopsByTimeInterval(result, 1,TimeInfo.UNIT_DAYS );
-        timeSlider.startup();
 
         //hide the popup if its outside the map's extent
         map.on("mouse-drag", function(evt) {
@@ -52,6 +48,40 @@ var map;
           }
         });
 
+        map.on("layers-add-result", initSlider);
+
+        function initSlider() {
+         var timeSlider = new TimeSlider({
+           style: "width: 100%;"
+         }, dom.byId("timeSliderDiv"));
+         map.setTimeSlider(timeSlider);
+
+         var timeExtent = new TimeExtent();
+         timeExtent.startTime = new Date("1/1/1921 UTC");
+         timeExtent.endTime = new Date("12/31/2009 UTC");
+         timeSlider.setThumbCount(2);
+         timeSlider.createTimeStopsByTimeInterval(timeExtent, 2, "esriTimeUnitsYears");
+         timeSlider.setThumbIndexes([0,1]);
+         timeSlider.setThumbMovingRate(2000);
+         timeSlider.startup();
+
+         //add labels for every other time stop
+         var labels = arrayUtils.map(timeSlider.timeStops, function(timeStop, i) {
+           if ( i % 2 === 0 ) {
+             return timeStop.getUTCFullYear();
+           } else {
+             return "";
+           }
+         });
+
+         timeSlider.setLabels(labels);
+
+         timeSlider.on("time-extent-change", function(evt) {
+           var startValString = evt.startTime.getUTCFullYear();
+           var endValString = evt.endTime.getUTCFullYear();
+           dom.byId("daterange").innerHTML = "<i>" + startValString + " and " + endValString  + "<\/i>";
+         });
+       }
         //create a feature collection for the flickr photos
         var featureCollection = {
           "layerDefinition": null,
@@ -102,7 +132,7 @@ var map;
           infoTemplate: popupTemplate
         });
         featureLayer.setUseMapTime(true);
-        
+
         //associate the features with the popup on click
         featureLayer.on("click", function(evt) {
           map.infoWindow.setFeatures([evt.graphic]);
