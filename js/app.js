@@ -52,26 +52,7 @@ function getCredentials(cb) {
   });
 }
 
-function postImage(imgurl) {
-  var data = {
-    'url': imgurl
-  };
-  var accessToken = localStorage.getItem('accessToken');
 
-  return $.ajax({
-    'url': 'https://api.clarifai.com/v1/tag',
-    'headers': {
-      'Authorization': 'Bearer ' + accessToken
-    },
-    'data': data,
-    'type': 'POST'
-  }).then(function(r){
-    parseResponse(r);
-  }).then(function(r){
-    if(AllTheData.dataPoints.length == AllTheData.geometry.length){
-    runMeLast(r);}
-  });
-}
 
 function parseResponse(resp) {
   if (resp.status_code === 'OK') {
@@ -93,10 +74,38 @@ function run(imgurl) {
   if (localStorage.getItem('tokenTimeStamp') - Math.floor(Date.now() / 1000) > 86400
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
-      postImage(imgurl);
+      var accessToken = localStorage.getItem('accessToken');
+
+      return $.ajax({
+        'url': 'https://api.clarifai.com/v1/tag',
+        'headers': {
+          'Authorization': 'Bearer ' + accessToken
+        },
+        'data': imgurl,
+        'type': 'POST'
+      }).then(function(r){
+        parseResponse(r);
+      }).then(function(r){
+        if(AllTheData.dataPoints.length == AllTheData.geometry.length){
+        runMeLast(r);}
+      });
     });
   } else {
-    postImage(imgurl);
+    var accessToken = localStorage.getItem('accessToken');
+
+    return $.ajax({
+      'url': 'https://api.clarifai.com/v1/tag',
+      'headers': {
+        'Authorization': 'Bearer ' + accessToken
+      },
+      'data': imgurl,
+      'type': 'POST'
+    }).then(function(r){
+      parseResponse(r);
+    }).then(function(r){
+      if(AllTheData.dataPoints.length == AllTheData.geometry.length){
+      runMeLast(r);}
+    });
   }
 }
 
@@ -232,15 +241,7 @@ function run(imgurl) {
           array.forEach(response.photos.photo, function(item) {
 
 
-            var id = item.id ;
-            var farm = item.farm ;
-            var secret = item.secret;
-            var size = "_h";
-            var serverID = item.server ;
-            var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
-            var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\">";
-            AllTheData.url.push(url);
-            AllTheData.otherUrl.push(otherUrl);
+
 
             var requestHandle2 = esriRequest({
               url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=0",
@@ -250,7 +251,15 @@ function run(imgurl) {
 
 
             requestHandle2.then( function(response, io){
-
+              var id = item.id ;
+              var farm = item.farm ;
+              var secret = item.secret;
+              var size = "_h";
+              var serverID = item.server ;
+              var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
+              var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\">";
+              AllTheData.url.push(url);
+              AllTheData.otherUrl.push(otherUrl);
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
               AllTheData.geometry.push(geometry);
               console.log(JSON.stringify(geometry));
