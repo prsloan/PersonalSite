@@ -244,7 +244,7 @@ function run(imgurl) {
 
 
             var requestHandle2 = esriRequest({
-              url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=0",
+              url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+item.id+"&format=json&nojsoncallback=0",
               callbackParamName : "jsoncallback"
             });
 
