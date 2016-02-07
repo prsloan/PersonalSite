@@ -158,15 +158,16 @@ function run(imgurl) {
           console.log(JSON.stringify(AllTheData.dataPoints));
           console.log(JSON.stringify(AllTheData.url));
           console.log(JSON.stringify(AllTheData.geometry));
-          for(i=0; i<AllTheData.dataPoints.length;i++){
-            var attr = {
-              'title' : AllTheData.title[i]   ,
-              'description' : AllTheData.otherUrl[i]+"<img src=\""+AllTheData.url[i]+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+AllTheData.dataPoints[i]+"<\/p>"
-            };
-            var graphic = new Graphic(AllTheData.geometry[i]);
-            graphic.setAttributes(attr);
-            features.push(graphic);
-        }
+          if(features.length <250){
+            for(i=0; i<AllTheData.dataPoints.length;i++){
+              var attr = {
+                'title' : AllTheData.title[i]   ,
+                'description' : AllTheData.otherUrl[i]+"<img src=\""+AllTheData.url[i]+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+AllTheData.dataPoints[i]+"<\/p>"
+              };
+              var graphic = new Graphic(AllTheData.geometry[i]);
+              graphic.setAttributes(attr);
+              features.push(graphic);
+          }}
           featureLayer.applyEdits(features, null, null);
       }
 
