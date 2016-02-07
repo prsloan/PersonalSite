@@ -119,7 +119,7 @@ var map;
         var features = [];
         var pages = 1 ;
         console.log("initial call success");
-        console.log(response.toJson());
+        console.log(JSON.stringify(response));
           array.forEach(response.photos.photo, function(item) {
             console.log("poop2");
             var attr = {};
