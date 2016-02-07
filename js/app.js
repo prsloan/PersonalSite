@@ -158,7 +158,7 @@ function run(imgurl) {
           console.log(JSON.stringify(AllTheData.dataPoints));
           console.log(JSON.stringify(AllTheData.url));
           console.log(JSON.stringify(AllTheData.geometry));
-          if(features.length <250){
+
             for(i=0; i<AllTheData.dataPoints.length;i++){
               var attr = {
                 'title' : AllTheData.title[i]   ,
@@ -167,7 +167,7 @@ function run(imgurl) {
               var graphic = new Graphic(AllTheData.geometry[i]);
               graphic.setAttributes(attr);
               features.push(graphic);
-          }}
+            }
           featureLayer.applyEdits(features, null, null);
       }
 
