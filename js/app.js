@@ -69,7 +69,7 @@ function parseResponse(resp, imgurl) {
   for(i=0;i<250;i++){
     if (imgurl == AllTheData.url[i]){
       AllTheData.dataPoints[i] = tags;
-      console.console.log(JSON.stringify(tags));
+      console.log(JSON.stringify(tags));
       AllTheData.populated.push(1);
       break;
     }
