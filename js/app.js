@@ -24,7 +24,7 @@ var map;
 
         map = new Map("mapDiv", {
           basemap: "dark-gray",
-          center: [34.05574, -117.820],
+          center: [-117.820, 34.05574 ],
           zoom: 5
         });
 
