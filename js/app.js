@@ -42,6 +42,7 @@ function parseResponse(resp) {
   var tags = [];
   if (resp.status_code === 'OK') {
     var results = resp.results;
+    console.log(JSON.stringify(results));
     tags = results[0].result.tag.classes;
   } else {
     console.log('Sorry, something is wrong.');
@@ -233,13 +234,13 @@ function run(imgurl) {
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
 
             var newTags = run(url);
-            console.log(newTags.toString());
+
 
             requestHandle2.then( function(response, io){
 
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
               console.log(JSON.stringify(geometry));
-              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+newTags.toString()+" <\/p>" ;
+              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b> <\/p>" ;
               attr["title"] = item.title ? item.title : "Flickr Photo";
 
               var graphic = new Graphic(geometry);
