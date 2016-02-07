@@ -131,7 +131,7 @@ var map;
               callbackParamName : "jsoncallback"
             });
 
-            var coordinates[] = requestHandle.then(secondRequestSucceed, requestFailed);
+            var coordinates = requestHandle.then(secondRequestSucceed, requestFailed);
             var geometry = new Point(coordinates[0],coordinates[1]);
             attr["title"] = item.title ? item.title : "Flickr Photo";
 
