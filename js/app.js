@@ -108,7 +108,7 @@ function run(imgurl) {
       },
       'data': data,
       'type': 'POST'
-    }).then(function(r. imgurl){
+    }).then(function(r, imgurl){
       parseResponse(r, imgurl);
     }).then(function(r){
       if(AllTheData.dataPoints.length == AllTheData.geometry.length){
