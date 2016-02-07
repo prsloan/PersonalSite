@@ -156,9 +156,6 @@ function run(imgurl) {
 
         function runMeLast(r){
           var features = [];
-          console.log(JSON.stringify(AllTheData.dataPoints));
-          console.log(JSON.stringify(AllTheData.url));
-          console.log(JSON.stringify(AllTheData.geometry));
 
             for(i=0; i<AllTheData.dataPoints.length;i++){
               var attr = {
@@ -273,7 +270,6 @@ function run(imgurl) {
               AllTheData.otherUrl.push(otherUrl);
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
               AllTheData.geometry.push(geometry);
-              console.log(JSON.stringify(geometry));
               AllTheData.title.push(item.title ? item.title : "Flickr Photo");
               //var graphic = new Graphic(geometry);
               //AllTheData.graphics.push(graphic);
