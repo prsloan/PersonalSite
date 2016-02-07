@@ -54,7 +54,7 @@ var map;
               "type": "simple",
               "symbol": {
                 "type": "esriPMS",
-                "url": "../img/social_flickr.png",
+                "url": "../img/social_flickr_box.png",
                 "contentType": "image/png",
                 "width": 15,
                 "height": 15
