@@ -231,7 +231,7 @@ function run(imgurl, i) {
 
         var pages = 1 ;
           for(i=0; i<response.photos.photo.length; i++) {
-            var item = response.photos;
+            var item = response.photos.photo;
             var id = item.id ;
             var farm = item.farm ;
             var secret = item.secret;
