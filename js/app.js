@@ -65,9 +65,9 @@ function postImage(imgurl) {
     'data': data,
     'type': 'POST'
   }).then(function(r){
-    parseResponse(r).then(function(r){
-      runMeLast(r);
-    });
+    parseResponse(r);
+  }).then(function(r){
+    runMeLast(r);
   });
 }
 
