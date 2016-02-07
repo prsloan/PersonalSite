@@ -132,9 +132,8 @@ var map;
             });
             console.log(response);
 
-            var coordinates = requestHandle.then(secondRequestSucceed, requestFailed);
+            var geometry = requestHandle.then(secondRequestSucceed, requestFailed);
             console.log(coordinates);
-            var geometry = new Point(coordinates[0],coordinates[1]);
             attr["title"] = item.title ? item.title : "Flickr Photo";
 
 
@@ -148,12 +147,8 @@ var map;
       }
 
       function secondRequestSucceed(response, io){
-        var lat = location.latitude ;
-        var long = location.longitude ;
-        console.log(lat);
-        console.log(long);
-        return [lat, long];
-
+        var location = new Point(response.photo.location);
+        return location;
       }
 
 
