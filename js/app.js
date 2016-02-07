@@ -137,7 +137,7 @@ function run(imgurl) {
           for(i=0; i<AllTheData.dataPoints.length;i++){
             var attr = {
               'title' : AllTheData.title[i]   ,
-              'description' : AllTheData.otherUrl+"<img src=\""+AllTheData.url[i]+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+AllTheData.dataPoints[i]+"<\/p>"
+              'description' : AllTheData.otherUrl[i]+"<img src=\""+AllTheData.url[i]+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+AllTheData.dataPoints[i]+"<\/p>"
             };
             AllTheData.graphics[i].setAttributes(attr);
             features.push(AllTheData.graphics[i]);
