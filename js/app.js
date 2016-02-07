@@ -1,29 +1,27 @@
 var map;
 var finalTags;
-var features = [];
 
-//Begin ESRI code
+require([
+  "esri/map",
+  "esri/layers/FeatureLayer",
+  "esri/dijit/PopupTemplate",
+  "esri/request",
+  "esri/geometry/Point",
+  "esri/graphic",
+  "dojo/on",
+  "dojo/_base/array",
+  "dojo/domReady!",
+], function(
+  Map,
+  FeatureLayer,
+  PopupTemplate,
+  esriRequest,
+  Point,
+  Graphic,
+  on,
+  array
+) {
 
-      require([
-        "esri/map",
-        "esri/layers/FeatureLayer",
-        "esri/dijit/PopupTemplate",
-        "esri/request",
-        "esri/geometry/Point",
-        "esri/graphic",
-        "dojo/on",
-        "dojo/_base/array",
-        "dojo/domReady!",
-      ], function(
-        Map,
-        FeatureLayer,
-        PopupTemplate,
-        esriRequest,
-        Point,
-        Graphic,
-        on,
-        array
-      ) {
 
 
 
@@ -46,7 +44,7 @@ function getCredentials(cb) {
   });
 }
 
-function postImage(imgurl, response) {
+function postImage(imgurl) {
   var data = {
     'url': imgurl
   };
@@ -59,26 +57,16 @@ function postImage(imgurl, response) {
     },
     'data': data,
     'type': 'POST'
-  }).then(function(r, response){
-    parseResponse(r, response);
+  }).then(function(r){
+    parseResponse(r);
   });
 }
 
-function parseResponse(resp, response) {
+function parseResponse(resp) {
   if (resp.status_code === 'OK') {
     var results = resp.results;
 
     tags = results[0].result.tag.classes;
-    var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
-    console.log(JSON.stringify(geometry));
-    attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+tags+" <\/p>" ;
-    attr["title"] = item.title ? item.title : "Flickr Photo";
-
-    var graphic = new Graphic(geometry);
-    graphic.setAttributes(attr);
-    features.push(graphic);
-    if (features.length > 8){
-    featureLayer.applyEdits(features, null, null);}
     console.log(tags);
   } else {
     console.log('Sorry, something is wrong.');
@@ -90,11 +78,11 @@ function parseResponse(resp, response) {
   return tags;
 }
 
-function run(imgurl, response) {
+function run(imgurl) {
   if (localStorage.getItem('tokenTimeStamp') - Math.floor(Date.now() / 1000) > 86400
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
-      postImage(imgurl, response);
+      postImage(imgurl);
     });
   } else {
     postImage(imgurl);
@@ -112,6 +100,8 @@ function run(imgurl, response) {
 
 
 
+
+//Begin ESRI code
 
 
 
@@ -209,7 +199,7 @@ function run(imgurl, response) {
         requestHandle.then(requestSucceeded, requestFailed);
       }
 
-
+      var features = [];
 
       function requestSucceeded(response, io) {
         //loop through the items and add to the feature layer
@@ -233,9 +223,23 @@ function run(imgurl, response) {
 
 
             requestHandle2.then( function(response, io){
-              run(url,response);
+              run(url);}).then( function(){
+              var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
+              console.log(JSON.stringify(geometry));
+              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+finalTags+" <\/p>" ;
+              attr["title"] = item.title ? item.title : "Flickr Photo";
 
+              var graphic = new Graphic(geometry);
+              graphic.setAttributes(attr);
+              features.push(graphic);
+              if (features.length > 8){
+              featureLayer.applyEdits(features, null, null);}
               }, requestFailed);
+
+
+
+
+
 
         });
 
