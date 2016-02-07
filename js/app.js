@@ -120,6 +120,7 @@ var map;
         var pages = 1 ;
         console.log("initial call success");
           array.forEach(response.photo, function(item) {
+            console.log("poop2");
             var attr = {};
             var id = item.id ;
             var farm = item.farm ;
@@ -127,11 +128,11 @@ var map;
             var size = 'h';
             var serverID = item.server ;
 
-            var requestHandle = esriRequest({
+            var requestHandle2 = esriRequest({
               url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=0",
               callbackParamName : "jsoncallback"
             });
-            console.log(response);
+            
 
             var geometry = requestHandle.then(secondRequestSucceed, requestFailed);
             console.log(coordinates);
