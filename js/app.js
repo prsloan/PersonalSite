@@ -142,7 +142,7 @@ function run(imgurl) {
               'title' : AllTheData.title[i]   ,
               'description' : AllTheData.otherUrl[i]+"<img src=\""+AllTheData.url[i]+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+AllTheData.dataPoints[i]+"<\/p>"
             };
-            var graphic = new graphic(AllTheData.geometry[i]);
+            var graphic = new Graphic(AllTheData.geometry[i]);
             graphic.setAttributes(attr);
             features.push(graphic);
         }
