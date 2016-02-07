@@ -1,5 +1,5 @@
 var map;
-var Alltags = [] ;
+var finalTags;
 
 function getCredentials(cb) {
   var data = {
@@ -50,6 +50,7 @@ function parseResponse(resp) {
 
   $('#tags').text(tags.toString().replace(/,/g, ', '));
     console.log(tags);
+  finalTags = Tags;
   return tags;
 }
 
@@ -207,25 +208,21 @@ function run(imgurl) {
             var secret = item.secret;
             var size = "_h";
             var serverID = item.server ;
-
+            var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
+            run(url);
             var requestHandle2 = esriRequest({
               url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=0",
               callbackParamName : "jsoncallback"
             });
-
-            var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
-
-            Alltags[features.lenth] = run(url);
-            console.log(Alltags);
-
 
 
 
             requestHandle2.then( function(response, io){
 
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
+
               console.log(JSON.stringify(geometry));
-              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+Alltags[features.lenth]+" <\/p>" ;
+              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+finalTags+" <\/p>" ;
               attr["title"] = item.title ? item.title : "Flickr Photo";
 
               var graphic = new Graphic(geometry);
