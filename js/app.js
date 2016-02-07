@@ -30,7 +30,8 @@ var AllTheData = {
   'description': [],
   'graphics':[],
   'url':[],
-  'otherUrl': []
+  'otherUrl': [],
+  'populated' : []
 };
 
 function getCredentials(cb) {
@@ -68,6 +69,7 @@ function parseResponse(resp, imgurl) {
   for(i=0;i<250;i++){
     if (imgurl == AllTheData.url[i]){
       AllTheData.dataPoints[i] = tags;
+      AllTheData.populated.push(1);
       break;
     }
   }
@@ -94,8 +96,8 @@ function run(imgurl) {
       }).then(function(r,imgurl){
         parseResponse(r, imgurl);
       }).then(function(r){
-
-        runMeLast(r);}
+        if(AllTheData.populated.length == 250){
+        runMeLast(r);}}
       );
     });
   } else {
@@ -112,8 +114,8 @@ function run(imgurl) {
       console.log(data.url);
       parseResponse(r, data.url);
     }).then(function(r){
-
-      runMeLast(r);}
+      if(AllTheData.populated.length == 250){
+      runMeLast(r);}}
     );
   }
 }
