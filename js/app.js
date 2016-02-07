@@ -146,8 +146,8 @@ var map;
       }
 
       function secondRequestSucceed(response, io){
-        var lat = photo.location.latitude ;
-        var long = photo.location.longitude ;
+        var lat = location.latitude ;
+        var long = location.longitude ;
         console.log(lat);
         console.log(long);
         return {
