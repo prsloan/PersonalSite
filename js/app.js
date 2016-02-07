@@ -29,7 +29,8 @@ var AllTheData = {
   'title' : [],
   'description': [],
   'graphics':[],
-  'url':[]
+  'url':[],
+  'otherUrl': []
 };
 
 function getCredentials(cb) {
@@ -136,7 +137,7 @@ function run(imgurl) {
           for(i=0; i<AllTheData.dataPoints.length;i++){
             var attr = {
               'title' : AllTheData.title[i]   ,
-              'description' : "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+AllTheData.url[i]+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+AllTheData.dataPoints[i]+"<\/p>"
+              'description' : AllTheData.otherUrl+"<img src=\""+AllTheData.url[i]+"\" \"width = \"240\" height=\"160\" /><\/a><\/p><p><b>Keywords :<\/b>"+AllTheData.dataPoints[i]+"<\/p>"
             };
             AllTheData.graphics[i].setAttributes(attr);
             features.push(AllTheData.graphics[i]);
@@ -232,7 +233,9 @@ function run(imgurl) {
             var size = "_h";
             var serverID = item.server ;
             var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
+            var otherUrl = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\">";
             AllTheData.url.push(url);
+            AllTheData.otherUrl.push(otherUrl);
 
             var requestHandle2 = esriRequest({
               url : "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a0167f062357d4dbc99e452427ab9bfb&photo_id="+id+"&format=json&nojsoncallback=0",
