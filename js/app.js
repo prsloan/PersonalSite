@@ -133,13 +133,13 @@ var map;
               callbackParamName : "jsoncallback"
             });
 
-            var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+size+".jpg" ;
+            var url = "http://farm"+farm+".staticflickr.com/"+serverID+"/"+id+"_"+secret+size+".jpg" ;
 
             requestHandle2.then( function(response, io){
 
               var geometry = new Point(response.photo.location.longitude, response.photo.location.latitude);
               console.log(JSON.stringify(geometry));
-              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"width = \"240\" height=\"160\" /><\/a><\/p>" ;
+              attr["description"] = "<p><a href=\"http://www.flickr.com/photos/"+item.owner+"/"+id+"/\"><img src=\""+url+"\"width = \"240\" height=\"160\" /><\/a><\/p>" ;
               attr["title"] = item.title ? item.title : "Flickr Photo";
               var graphic = new Graphic(geometry);
               graphic.setAttributes(attr);
