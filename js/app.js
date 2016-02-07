@@ -1,5 +1,6 @@
 var map;
 var finalTags;
+var NUMBER_OF_QUERIES = 10;
 //Begin ESRI code
 
       require([
@@ -24,13 +25,13 @@ var finalTags;
       ) {
 
 var AllTheData = {
-  'dataPoints' : [],
-  'geometry' : [],
-  'title' : [],
-  'description': [],
-  'graphics':[],
-  'url':[],
-  'otherUrl': []
+  'dataPoints' : new Array(NUMBER_OF_QUERIES),
+  'geometry' : new Array(NUMBER_OF_QUERIES),
+  'title' : new Array(NUMBER_OF_QUERIES),
+  'description': new Array(NUMBER_OF_QUERIES),
+  'graphics':new Array(NUMBER_OF_QUERIES),
+  'url':new Array(NUMBER_OF_QUERIES),
+  'otherUrl': new Array(NUMBER_OF_QUERIES)
 };
 
 function getCredentials(cb) {
