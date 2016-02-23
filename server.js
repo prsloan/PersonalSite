@@ -29,5 +29,5 @@ my_http.createServer(function(request,response){
             });
         }
     });
-}).listen(80);
-sys.puts("Server Running on 8080");
+}).listen(3000);
+sys.puts("Server Running on 3000");
