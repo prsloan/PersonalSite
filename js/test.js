@@ -23,6 +23,20 @@ res.on("end", function () {
 });
 });
 
+req.write(JSON.stringify({ SetupId: 'PFP',
+Type: 'Sale',
+Customer: 'PayFabric',
+Amount: 19.99,
+Currency: 'USD',
+Card: {
+    Account: '4111111111111111',
+    ExpDate: '0819',
+        CardHolder: { FirstName: 'John', LastName: 'Doe' }
+} }));
+req.end();
+
+
+
 req.end();
 
 // Replace Device ID and Password with your unique combination
